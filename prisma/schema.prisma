@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+}
+
+enum CarStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  DRAFT
+}
+
+enum BodyStyle {
+  COUPE
+  CONVERTIBLE
+  SEDAN
+  SUV
+  HYPERCAR
+}
+
+enum FuelType {
+  PETROL
+  HYBRID
+  ELECTRIC
+}
+
+enum Transmission {
+  AUTOMATIC
+  MANUAL
+  DCT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CLOSED
+  LOST
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(MANAGER)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  assignedLeads Lead[] @relation("LeadAssignee")
+
+  @@index([role])
+}
+
+model Car {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  brand        String
+  model        String
+  year         Int
+  price        Int
+  mileage      Int
+  bodyStyle    BodyStyle
+  fuelType     FuelType
+  transmission Transmission
+  horsepower   Int
+  engine       String
+  torque       String
+  acceleration String
+  topSpeed     String
+  drivetrain   String
+  weight       String
+  description  String      @db.Text
+  featured     Boolean     @default(false)
+  status       CarStatus   @default(AVAILABLE)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  images CarImage[]
+  leads  Lead[]
+
+  @@index([brand])
+  @@index([featured])
+  @@index([status])
+  @@index([price])
+  @@index([year])
+}
+
+model CarImage {
+  id                 String   @id @default(cuid())
+  carId              String
+  url                String
+  publicId           String?
+  alt                String?
+  sortOrder          Int      @default(0)
+  isPrimary          Boolean  @default(false)
+  createdAt          DateTime @default(now())
+
+  car Car @relation(fields: [carId], references: [id], onDelete: Cascade)
+
+  @@index([carId, sortOrder])
+}
+
+model Lead {
+  id          String     @id @default(cuid())
+  carId       String?
+  assignedToId String?
+  name        String
+  email       String
+  phone       String
+  message     String     @db.Text
+  source      String     @default("website")
+  status      LeadStatus @default(NEW)
+  notes       String?    @db.Text
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  car        Car?  @relation(fields: [carId], references: [id], onDelete: SetNull)
+  assignedTo User? @relation("LeadAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([carId])
+  @@index([createdAt])
+}
