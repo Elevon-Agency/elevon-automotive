@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Car, Star, Inbox, CircleDollarSign } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { formatPrice } from "@/lib/utils";
+
 type RecentLead = {
   id: string;
   name: string;
@@ -105,7 +106,7 @@ export default async function AdminDashboardPage() {
             </Link>
           </div>
           <div className="mt-4 divide-y divide-border">
-            {recentLeads.map((lead) => (
+            {recentLeads.map((lead: RecentLead) => (
               <div key={lead.id} className="py-4">
                 <div className="flex items-center justify-between gap-4">
                   <p className="font-medium">{lead.name}</p>
