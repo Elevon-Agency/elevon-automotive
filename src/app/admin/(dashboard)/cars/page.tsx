@@ -28,7 +28,7 @@ export default async function AdminCarsPage({
         }
       : {}),
   };
-  const [cars, total] = await Promise.all([
+  const [cars, total]: [any[], number] = await Promise.all([
     prisma.car.findMany({
       where,
       take,
