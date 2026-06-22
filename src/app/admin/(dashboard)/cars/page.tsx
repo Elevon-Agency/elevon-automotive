@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import { Plus, Search } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatPrice, formatNumber } from "@/lib/utils";
+type CarWithImage = Prisma.CarGetPayload<{
+  include: {
+    images: true;
+  };
+}>;
 
 export const dynamic = "force-dynamic";
 
@@ -78,7 +84,7 @@ export default async function AdminCarsPage({
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {cars.map((car) => (
+            {cars.map((car: CarWithImage) => (
               <tr key={car.id}>
                 <td className="p-4">
                   <div className="flex items-center gap-4">

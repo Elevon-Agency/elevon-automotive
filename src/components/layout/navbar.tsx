@@ -49,9 +49,7 @@ export function Navbar() {
         transition={{ duration: 0.8, delay: 2.2, ease: [0.76, 0, 0.24, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-          scrolled
-            ? "glass py-3 shadow-sm"
-            : "bg-transparent py-6"
+          scrolled ? "glass py-3 shadow-sm" : "bg-transparent py-6",
         )}
       >
         <nav className="container-wide flex items-center justify-between">
@@ -72,7 +70,7 @@ export function Navbar() {
                     pathname === link.href ||
                       (link.href !== "/" && pathname.startsWith(link.href))
                       ? "text-foreground"
-                      : "text-muted-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {link.label}
@@ -110,7 +108,11 @@ export function Navbar() {
         </nav>
       </motion.header>
 
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SearchOverlay
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        vehicles={[]}
+      />
 
       <AnimatePresence>
         {menuOpen && (
@@ -123,7 +125,9 @@ export function Navbar() {
           >
             <div className="flex h-full flex-col">
               <div className="container-wide flex items-center justify-between py-6">
-                <span className="text-display text-lg font-semibold">Elevon Automotive</span>
+                <span className="text-display text-lg font-semibold">
+                  Elevon Automotive
+                </span>
                 <Button
                   variant="ghost"
                   size="icon"

@@ -12,9 +12,10 @@ import { formatPrice } from "@/lib/utils";
 interface SearchOverlayProps {
   open: boolean;
   onClose: () => void;
+  vehicles: Vehicle[];
 }
 
-export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
+export function SearchOverlay({ open, onClose, vehicles }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
         v.model.toLowerCase().includes(q) ||
         `${v.brand} ${v.model}`.toLowerCase().includes(q)
     );
-  }, [query]);
+  }, [query, vehicles]);
 
   return (
     <AnimatePresence>
