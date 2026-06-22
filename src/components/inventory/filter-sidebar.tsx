@@ -10,7 +10,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { brands, BodyStyle, FuelType, Transmission } from "@/lib/vehicles";
 import { formatPrice } from "@/lib/utils";
 import { X } from "lucide-react";
 
@@ -36,18 +35,21 @@ export const defaultFilters: FilterState = {
   fuelType: "all",
   transmission: "all",
   horsepowerRange: [0, 2000],
-  yearRange: [2018, 2025],
-  mileageRange: [0, 50000],
+  yearRange: [2000, 2027],
+  mileageRange: [0, 300000]
 };
 
-const bodyStyles: BodyStyle[] = ["Coupe", "Convertible", "Sedan", "SUV", "Hypercar"];
-const fuelTypes: FuelType[] = ["Petrol", "Hybrid", "Electric"];
-const transmissions: Transmission[] = ["Automatic", "Manual", "DCT"];
 
 interface FilterSidebarProps {
   filters: FilterState;
   onChange: (filters: FilterState) => void;
+
   models: string[];
+  brands: string[];
+  bodyStyles: string[];
+  fuelTypes: string[];
+  transmissions: string[];
+
   resultCount: number;
   onClose?: () => void;
 }
@@ -56,6 +58,10 @@ export function FilterSidebar({
   filters,
   onChange,
   models,
+  brands,
+  bodyStyles,
+  fuelTypes,
+  transmissions,
   resultCount,
   onClose,
 }: FilterSidebarProps) {

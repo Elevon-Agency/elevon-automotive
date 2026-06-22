@@ -33,10 +33,10 @@ const features = [
 ];
 
 const metrics = [
-  { value: 15, suffix: "+", label: "Years of Excellence" },
-  { value: 500, suffix: "+", label: "Vehicles Delivered" },
+  { value: 7, suffix: "+", label: "Years of Excellence" },
+  { value: 100, suffix: "+", label: "Vehicles Delivered" },
   { value: 98, suffix: "%", label: "Client Satisfaction" },
-  { value: 12, suffix: "", label: "Global Brands" },
+  { value: 17, suffix: "", label: "Global Brands" },
 ];
 
 export function WhyChooseUs() {
@@ -45,7 +45,7 @@ export function WhyChooseUs() {
       <div className="container-wide">
         <RevealOnScroll>
           <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
-            Why Apex
+            Why Elevon Automotive
           </p>
           <AnimatedText
             text="The Standard of Excellence"

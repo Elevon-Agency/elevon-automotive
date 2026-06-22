@@ -12,7 +12,7 @@ import {
   FilterState,
   defaultFilters,
 } from "@/components/inventory/filter-sidebar";
-import type { Vehicle } from "@/lib/vehicles";
+import { Vehicle } from "@/lib/types/vehicle";
 import { AnimatedText } from "@/components/shared/animated-text";
 
 const ITEMS_PER_PAGE = 6;
@@ -31,11 +31,27 @@ export function InventoryContent({ vehicles }: { vehicles: Vehicle[] }) {
   }, []);
 
   const models = useMemo(() => {
-    const brandModels = filters.brand === "all"
-      ? vehicles
-      : vehicles.filter((v) => v.brand === filters.brand);
+    const brandModels =
+      filters.brand === "all"
+        ? vehicles
+        : vehicles.filter((v) => v.brand === filters.brand);
     return [...new Set(brandModels.map((v) => v.model))];
-  }, [filters.brand]);
+  }, [filters.brand, vehicles]);
+  const brands = useMemo(() => {
+    return [...new Set(vehicles.map((v) => v.brand))].sort();
+  }, [vehicles]);
+
+  const bodyStyles = useMemo(() => {
+    return [...new Set(vehicles.map((v) => v.bodyStyle))].sort();
+  }, [vehicles]);
+
+  const fuelTypes = useMemo(() => {
+    return [...new Set(vehicles.map((v) => v.fuelType))].sort();
+  }, [vehicles]);
+
+  const transmissions = useMemo(() => {
+    return [...new Set(vehicles.map((v) => v.transmission))].sort();
+  }, [vehicles]);
 
   const filtered = useMemo(() => {
     return vehicles.filter((v) => {
@@ -74,7 +90,11 @@ export function InventoryContent({ vehicles }: { vehicles: Vehicle[] }) {
         return false;
       return true;
     });
-  }, [filters]);
+  }, [filters, vehicles]);
+
+  console.log("VEHICLES:", vehicles);
+  console.log("FILTERS:", filters);
+  console.log("FILTERED:", filtered);
 
   const paginated = filtered.slice(0, page * ITEMS_PER_PAGE);
   const hasMore = paginated.length < filtered.length;
@@ -120,9 +140,7 @@ export function InventoryContent({ vehicles }: { vehicles: Vehicle[] }) {
           <Input
             placeholder="Search inventory..."
             value={filters.search}
-            onChange={(e) =>
-              setFilters({ ...filters, search: e.target.value })
-            }
+            onChange={(e) => setFilters({ ...filters, search: e.target.value })}
             className="pl-8"
           />
         </div>
@@ -143,6 +161,10 @@ export function InventoryContent({ vehicles }: { vehicles: Vehicle[] }) {
               filters={filters}
               onChange={setFilters}
               models={models}
+              brands={brands}
+              bodyStyles={bodyStyles}
+              fuelTypes={fuelTypes}
+              transmissions={transmissions}
               resultCount={filtered.length}
             />
           </div>
@@ -155,6 +177,10 @@ export function InventoryContent({ vehicles }: { vehicles: Vehicle[] }) {
                 filters={filters}
                 onChange={setFilters}
                 models={models}
+                brands={brands}
+                bodyStyles={bodyStyles}
+                fuelTypes={fuelTypes}
+                transmissions={transmissions}
                 resultCount={filtered.length}
                 onClose={() => setMobileFiltersOpen(false)}
               />

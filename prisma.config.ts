@@ -8,6 +8,6 @@ export default defineConfig({
     seed: "node prisma/seed.mjs",
   },
   datasource: {
-    url: process.env.DATABASE_URL || "postgresql://user:password@localhost:5432/apex",
+    url: process.env.DATABASE_URL || "postgresql://user:password@localhost:5432/Elevon Automotive",
   },
 });

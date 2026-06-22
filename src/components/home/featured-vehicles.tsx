@@ -3,9 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence, useMotionValue, PanInfo } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  PanInfo,
+} from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import type { Vehicle } from "@/lib/vehicles";
+import { Vehicle } from "@/lib/types/vehicle";
 import { formatPrice } from "@/lib/utils";
 import { AnimatedText } from "@/components/shared/animated-text";
 import { RevealOnScroll } from "@/components/shared/reveal-on-scroll";
@@ -15,7 +20,8 @@ export function FeaturedVehicles({ vehicles }: { vehicles: Vehicle[] }) {
   const dragX = useMotionValue(0);
 
   const next = () => setActive((p) => (p + 1) % vehicles.length);
-  const prev = () => setActive((p) => (p - 1 + vehicles.length) % vehicles.length);
+  const prev = () =>
+    setActive((p) => (p - 1 + vehicles.length) % vehicles.length);
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
     if (vehicles.length === 0) return;
@@ -149,7 +155,7 @@ export function FeaturedVehicles({ vehicles }: { vehicles: Vehicle[] }) {
                     className="absolute inset-0"
                   >
                     <Image
-                      src={vehicle.images[0]}
+                      src={vehicle.images?.[0] || "/placeholder-car.jpg"}
                       alt={`${vehicle.brand} ${vehicle.model}`}
                       fill
                       className="object-cover"

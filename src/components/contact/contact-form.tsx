@@ -86,7 +86,7 @@ export function ContactForm() {
 
   const onSubmit = async (data: ContactFormData) => {
     try {
-      const response = await fetch("/api/leads", {
+      const response = await fetch("/api/enquiries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

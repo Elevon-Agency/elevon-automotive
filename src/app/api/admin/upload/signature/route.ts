@@ -8,7 +8,7 @@ export async function POST() {
   const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
   const apiKey = process.env.CLOUDINARY_API_KEY;
   const apiSecret = process.env.CLOUDINARY_API_SECRET;
-  const folder = process.env.CLOUDINARY_FOLDER || "apex-motors";
+  const folder = process.env.CLOUDINARY_FOLDER || "Elevon Automotive-motors";
 
   if (!cloudName || !apiKey || !apiSecret) {
     return NextResponse.json({ error: "Cloudinary is not configured." }, { status: 500 });

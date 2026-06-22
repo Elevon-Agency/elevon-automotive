@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db";
-import { vehicles as fallbackVehicles, type Vehicle } from "@/lib/vehicles";
+import { supabase } from "@/lib/supabase";
+import type { Vehicle } from "@/lib/types/vehicle";
 
 type DbCar = {
   id: string;
@@ -9,19 +9,19 @@ type DbCar = {
   year: number;
   price: number;
   mileage: number;
-  bodyStyle: string;
-  fuelType: string;
+  body_style: string;
+  fuel_type: string;
   transmission: string;
   horsepower: number;
   engine: string;
   torque: string;
   acceleration: string;
-  topSpeed: string;
+  top_speed: string;
   drivetrain: string;
   weight: string;
   description: string;
   featured: boolean;
-  images: { url: string }[];
+  car_images: { image_url: string }[];
 };
 
 function titleEnum(value: string) {
@@ -39,60 +39,103 @@ export function mapCarToVehicle(car: DbCar): Vehicle {
     year: car.year,
     price: car.price,
     mileage: car.mileage,
-    bodyStyle: titleEnum(car.bodyStyle) as Vehicle["bodyStyle"],
-    fuelType: titleEnum(car.fuelType) as Vehicle["fuelType"],
+    bodyStyle: titleEnum(car.body_style) as Vehicle["bodyStyle"],
+    fuelType: titleEnum(car.fuel_type) as Vehicle["fuelType"],
     transmission,
-    horsepower: car.horsepower,
+    horsepower: Number(car.horsepower) || 0,
     engine: car.engine,
     torque: car.torque,
     acceleration: car.acceleration,
-    topSpeed: car.topSpeed,
+    topSpeed: car.top_speed,
     description: car.description,
     featured: car.featured,
-    images: car.images.map((image) => image.url),
+    images: car.car_images?.map((image) => image.image_url) ?? [],
     specs: {
-      Power: `${car.horsepower.toLocaleString()} HP`,
-      Torque: car.torque,
-      "0-100 km/h": car.acceleration,
-      "Top Speed": car.topSpeed,
-      Drivetrain: car.drivetrain,
-      Weight: car.weight,
-      Transmission: transmission,
-    },
+  Power: `${Number(car.horsepower).toLocaleString()} HP`,
+  Torque: car.torque,
+  "0-100 km/h": car.acceleration,
+  "Top Speed": car.top_speed,
+  Drivetrain: car.drivetrain,
+  Weight: car.weight,
+  Transmission: transmission,
+},
   };
 }
 
-const includeImages = {
-  images: {
-    orderBy: [{ isPrimary: "desc" as const }, { sortOrder: "asc" as const }],
-    select: { url: true },
-  },
-};
-
 export async function getInventoryVehicles(): Promise<Vehicle[]> {
-  if (!process.env.DATABASE_URL) return fallbackVehicles;
   try {
-    const cars = await prisma.car.findMany({
-      where: { status: { not: "DRAFT" } },
-      orderBy: [{ featured: "desc" }, { updatedAt: "desc" }],
-      include: includeImages,
-    });
-    return cars.length ? cars.map(mapCarToVehicle) : fallbackVehicles;
+    const { data, error } = await supabase
+      .from("cars")
+      .select(
+        `
+  *,
+  car_images (
+    image_url
+  )
+`,
+      )
+
+      .order("featured", { ascending: false })
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("SUPABASE ERROR:", error);
+      return [];
+    }
+
+    console.log("SUPABASE DATA:", data);
+
+    if (!data?.length) {
+      console.log("No cars returned");
+      return [];
+    }
+
+    return data.map((car) => {
+  console.log("MAPPING CAR:", car);
+
+  const mapped = mapCarToVehicle(car as DbCar);
+
+  console.log("MAPPED VEHICLE:", mapped);
+
+  return mapped;
+});
   } catch {
-    return fallbackVehicles;
+    return [];
   }
 }
 
-export async function getInventoryVehicleBySlug(slug: string): Promise<Vehicle | undefined> {
-  if (!process.env.DATABASE_URL) return fallbackVehicles.find((car) => car.slug === slug);
+export async function getInventoryVehicleBySlug(
+  slug: string,
+): Promise<Vehicle | undefined> {
   try {
-    const car = await prisma.car.findFirst({
-      where: { slug, status: { not: "DRAFT" } },
-      include: includeImages,
-    });
-    return car ? mapCarToVehicle(car) : undefined;
+    const { data, error } = await supabase
+      .from("cars")
+      .select(
+        `
+  *,
+  car_images (
+    image_url
+  )
+`,
+      )
+      .eq("slug", slug)
+
+      .single();
+
+    if (error) {
+      console.error("SLUG ERROR:", error);
+      return undefined;
+    }
+
+    console.log("SLUG DATA:", data);
+
+    if (!data) {
+      return undefined;
+    }
+
+    return mapCarToVehicle(data as DbCar);
   } catch {
-    return fallbackVehicles.find((item) => item.slug === slug);
+    return undefined;
   }
 }
 

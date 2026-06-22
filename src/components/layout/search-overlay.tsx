@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { vehicles } from "@/lib/vehicles";
+import { Vehicle } from "@/lib/types/vehicle";
 import { formatPrice } from "@/lib/utils";
 
 interface SearchOverlayProps {

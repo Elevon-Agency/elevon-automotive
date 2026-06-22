@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
 import { AnimatedText } from "@/components/shared/animated-text";
 
 const stats = [
-  { label: "Power", value: "1,380", unit: "HP" },
-  { label: "0–100", value: "2.4", unit: "SEC" },
-  { label: "Top Speed", value: "378", unit: "KM/H" },
+  { label: "Vehicles", value: "50+", unit: "" },
+  { label: "German Brands", value: "12", unit: "" },
+  { label: "Years Experience", value: "7+", unit: "" },
 ];
 
 export function Hero() {
@@ -45,8 +45,8 @@ export function Hero() {
         className="absolute inset-0 scale-110"
       >
         <Image
-          src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=2400&q=85"
-          alt="Apex Aurora GT hypercar"
+          src="https://ivxoacxhextmqirspmmg.supabase.co/storage/v1/object/public/other%20photos%20frontend/dealership%20hero.png"
+          alt="Elevon Automotive Aurora GT hypercar"
           fill
           priority
           className="object-cover"
@@ -66,10 +66,10 @@ export function Hero() {
               transition={{ delay: 2.4, duration: 0.6 }}
               className="mb-6 text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground"
             >
-              Apex Aurora GT · 2025
+              European Performance Vehicles
             </motion.p>
             <AnimatedText
-              text="Beyond Performance."
+              text="Find Your Next Performance Car."
               as="h1"
               className="text-display text-5xl font-light sm:text-7xl lg:text-8xl xl:text-9xl"
               delay={2.5}
@@ -80,8 +80,8 @@ export function Hero() {
               transition={{ delay: 2.8, duration: 0.6 }}
               className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground lg:text-lg"
             >
-              Where engineering obsession meets artistic vision. Experience
-              automotive excellence redefined.
+              Browse a collection of luxury, sports, and performance vehicles.
+              Engineered on the absolute limit of the Nurburgring
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -89,8 +89,8 @@ export function Hero() {
               transition={{ delay: 3, duration: 0.6 }}
               className="mt-10 flex flex-wrap gap-4"
             >
-              <Link href="/inventory/apex-aurora-gt">
-                <Button size="lg">Explore Aurora GT</Button>
+              <Link href="/inventory">
+                <Button size="lg">Explore Inventory</Button>
               </Link>
               <Link href="/contact#test-drive">
                 <Button variant="outline" size="lg">

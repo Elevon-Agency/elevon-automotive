@@ -10,7 +10,7 @@ function hashPassword(password) {
 }
 
 const cars = [
-  ["apex-aurora-gt", "Apex", "Aurora GT", 2025, 2840000, 120, "HYPERCAR", "HYBRID", "DCT", 1380, "5.0L V8 Twin-Turbo + Electric", "1,180 Nm", "2.4s", "378 km/h", "AWD", "1,420 kg", true, "The Aurora GT represents the pinnacle of Apex engineering - a hybrid hypercar where aerospace-grade carbon meets relentless performance.", ["https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=80", "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80"]],
+  ["Elevon Automotive-aurora-gt", "Elevon Automotive", "Aurora GT", 2025, 2840000, 120, "HYPERCAR", "HYBRID", "DCT", 1380, "5.0L V8 Twin-Turbo + Electric", "1,180 Nm", "2.4s", "378 km/h", "AWD", "1,420 kg", true, "The Aurora GT represents the pinnacle of Elevon Automotive engineering - a hybrid hypercar where aerospace-grade carbon meets relentless performance.", ["https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=80", "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80"]],
   ["mclaren-750s", "McLaren", "750S", 2024, 324500, 2400, "COUPE", "PETROL", "DCT", 740, "4.0L V8 Twin-Turbo", "800 Nm", "2.8s", "332 km/h", "RWD", "1,277 kg", true, "Lightweight supercar engineering distilled into its purest form. The 750S delivers McLaren's signature driving purity.", ["https://images.unsplash.com/photo-1621135802923-133df0311763?w=1920&q=80", "https://images.unsplash.com/photo-1583121274602-3e2820c87582?w=1920&q=80"]],
   ["porsche-911-gt3-rs", "Porsche", "911 GT3 RS", 2024, 241000, 890, "COUPE", "PETROL", "DCT", 518, "4.0L Flat-Six", "465 Nm", "3.2s", "296 km/h", "RWD", "1,450 kg", true, "Track-bred precision meets road-going refinement. The GT3 RS is motorsport philosophy made tangible.", ["https://images.unsplash.com/photo-1614162692290-7b32a100e343?w=1920&q=80", "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&q=80"]],
   ["ferrari-sf90-stradale", "Ferrari", "SF90 Stradale", 2023, 625000, 3100, "COUPE", "HYBRID", "DCT", 986, "4.0L V8 Twin-Turbo + Electric", "800 Nm", "2.5s", "340 km/h", "AWD", "1,570 kg", false, "Ferrari's first series-production PHEV. The SF90 Stradale redefines what a supercar can be.", ["https://images.unsplash.com/photo-1583121274602-3e2820c87582?w=1920&q=80", "https://images.unsplash.com/photo-1590362891991-f776e747a588?w=1920&q=80"]],
@@ -54,11 +54,11 @@ for (const car of cars) {
 }
 
 await prisma.user.upsert({
-  where: { email: "admin@apex.local" },
+  where: { email: "admin@Elevon Automotive.local" },
   update: {},
   create: {
     name: "Showroom Admin",
-    email: "admin@apex.local",
+    email: "admin@Elevon Automotive.local",
     role: "ADMIN",
     passwordHash: hashPassword("ChangeMe123!"),
   },

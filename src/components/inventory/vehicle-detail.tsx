@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Vehicle } from "@/lib/vehicles";
+import { Vehicle } from "@/lib/types/vehicle";
 import { formatPrice, formatNumber } from "@/lib/utils";
 import { Counter } from "@/components/shared/counter";
 
@@ -15,13 +15,20 @@ interface VehicleDetailProps {
 }
 
 export function VehicleDetail({ vehicle }: VehicleDetailProps) {
+  console.log("DETAIL RECEIVED VEHICLE:", vehicle);
+  console.log("DETAIL VEHICLE:", vehicle);
+  const displayImages = vehicle.images.length
+  ? vehicle.images
+  : ["/placeholder-car.jpg"];
+
   const [activeImage, setActiveImage] = useState(0);
 
   const nextImage = () =>
-    setActiveImage((p) => (p + 1) % vehicle.images.length);
+    setActiveImage((p) => (p + 1) % displayImages.length);
+
   const prevImage = () =>
     setActiveImage(
-      (p) => (p - 1 + vehicle.images.length) % vehicle.images.length
+      (p) => (p - 1 + displayImages.length) % displayImages.length
     );
 
   return (
@@ -47,7 +54,7 @@ export function VehicleDetail({ vehicle }: VehicleDetailProps) {
             className="absolute inset-0"
           >
             <Image
-              src={vehicle.images[activeImage]}
+              src={displayImages[activeImage]}
               alt={`${vehicle.brand} ${vehicle.model}`}
               fill
               className="object-cover"
@@ -74,7 +81,7 @@ export function VehicleDetail({ vehicle }: VehicleDetailProps) {
         </button>
 
         <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2">
-          {vehicle.images.map((_, i) => (
+          {displayImages.map((_, i) => (
             <button
               key={i}
               onClick={() => setActiveImage(i)}
@@ -104,7 +111,7 @@ export function VehicleDetail({ vehicle }: VehicleDetailProps) {
 
             <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-4">
               {[
-                { label: "Power", value: vehicle.horsepower, suffix: " HP" },
+                { label: "Power", value: Number(vehicle.horsepower) || 0, suffix: " HP" },
                 { label: "0–100", value: vehicle.acceleration, suffix: "" },
                 { label: "Top Speed", value: vehicle.topSpeed, suffix: "" },
                 { label: "Mileage", value: formatNumber(vehicle.mileage), suffix: " mi" },
@@ -183,7 +190,7 @@ export function VehicleDetail({ vehicle }: VehicleDetailProps) {
         </div>
 
         <div className="mt-8 flex gap-2 overflow-x-auto scrollbar-hide">
-          {vehicle.images.map((img, i) => (
+          {displayImages.map((img, i) => (
             <button
               key={i}
               onClick={() => setActiveImage(i)}

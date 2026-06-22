@@ -1,12 +1,19 @@
 "use client";
 
+import { Vehicle } from "@/lib/types/vehicle";
 import { motion } from "framer-motion";
 import { AnimatedText } from "@/components/shared/animated-text";
 import { ContactForm } from "@/components/contact/contact-form";
 import { TestDriveForm } from "@/components/contact/test-drive-form";
 import { DealershipInfo } from "@/components/contact/dealership-info";
 
-export function ContactPageContent() {
+interface ContactPageContentProps {
+  vehicles: Vehicle[];
+}
+
+export function ContactPageContent({
+  vehicles,
+}: ContactPageContentProps) {
   return (
     <div>
       <section className="relative overflow-hidden pt-32 pb-16">
@@ -81,7 +88,7 @@ export function ContactPageContent() {
               transition={{ duration: 0.8 }}
               className="border border-border bg-background p-8 lg:p-12"
             >
-              <TestDriveForm />
+              <TestDriveForm vehicles={vehicles} />
             </motion.div>
           </div>
         </div>

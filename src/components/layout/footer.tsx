@@ -29,7 +29,7 @@ export function Footer() {
               href="/"
               className="text-display text-2xl font-semibold tracking-tight"
             >
-              APEX
+              Elevon Automotive
             </Link>
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Defining the future of automotive excellence. Curated hypercars
@@ -76,14 +76,14 @@ export function Footer() {
 
         <div className="mt-20 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Apex Motors. All rights reserved.
+            © {new Date().getFullYear()} Elevon Automotive Motors. All rights reserved.
           </p>
           <div className="flex gap-8">
             <Link
               href="#"
               className="text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
-              Privacy Policy
+              Elevon Agency | Website by Elevon
             </Link>
             <Link
               href="#"

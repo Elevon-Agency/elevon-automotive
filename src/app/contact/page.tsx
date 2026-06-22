@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
 import { ContactPageContent } from "@/components/contact/contact-page-content";
+import { getInventoryVehicles } from "@/lib/vehicle-data";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with Apex Motors. Schedule a test drive, enquire about financing, or visit our flagship showroom in Beverly Hills.",
-};
+export default async function ContactPage() {
+  const vehicles = await getInventoryVehicles();
 
-export default function ContactPage() {
-  return <ContactPageContent />;
+  return <ContactPageContent vehicles={vehicles} />;
 }

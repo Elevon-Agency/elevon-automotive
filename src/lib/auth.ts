@@ -12,7 +12,7 @@ export type AuthUser = {
   role: AuthRole;
 };
 
-const COOKIE_NAME = "apex_admin_session";
+const COOKIE_NAME = "Elevon Automotive_admin_session";
 const MAX_AGE = 60 * 60 * 8;
 
 function secret() {

@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { vehicles } from "@/lib/vehicles";
+import { Vehicle } from "@/lib/types/vehicle";
 import { cn } from "@/lib/utils";
 
 const testDriveSchema = z.object({
@@ -41,11 +41,14 @@ const timeSlots = [
   "05:00 PM",
 ];
 
-export function TestDriveForm() {
+interface TestDriveFormProps {
+  vehicles: Vehicle[];
+}
+
+export function TestDriveForm({ vehicles }: TestDriveFormProps) {
   const [confirmed, setConfirmed] = useState(false);
-  const [bookingDetails, setBookingDetails] = useState<TestDriveFormData | null>(
-    null
-  );
+  const [bookingDetails, setBookingDetails] =
+    useState<TestDriveFormData | null>(null);
 
   const {
     register,
@@ -58,23 +61,44 @@ export function TestDriveForm() {
   });
 
   const onSubmit = async (data: TestDriveFormData) => {
+  try {
     const vehicle = vehicles.find((v) => v.slug === data.vehicle);
-    const response = await fetch("/api/leads", {
+
+    const response = await fetch("/api/test-drives", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
+
       body: JSON.stringify({
+        vehicle: vehicle
+          ? `${vehicle.brand} ${vehicle.model}`
+          : data.vehicle,
+
+        date: data.date,
+        time: data.time,
+
         name: data.name,
         email: data.email,
         phone: data.phone,
-        source: "test-drive-form",
-        message: `Test drive request for ${vehicle ? `${vehicle.brand} ${vehicle.model}` : data.vehicle} on ${data.date} at ${data.time}.`,
       }),
     });
-    if (!response.ok) throw new Error("Test drive request failed");
+
+
+    if (!response.ok) {
+      throw new Error("Test drive submission failed");
+    }
+
+
     setBookingDetails(data);
     setConfirmed(true);
     reset();
-  };
+
+  } catch (error) {
+  console.error("TEST DRIVE ERROR:", error);
+  alert("Something went wrong. Check console.");
+}
+};
 
   const selectedVehicle = bookingDetails
     ? vehicles.find((v) => v.slug === bookingDetails.vehicle)
@@ -137,7 +161,9 @@ export function TestDriveForm() {
           control={control}
           render={({ field }) => (
             <Select onValueChange={field.onChange} value={field.value}>
-              <SelectTrigger className={cn(errors.vehicle && "border-destructive")}>
+              <SelectTrigger
+                className={cn(errors.vehicle && "border-destructive")}
+              >
                 <SelectValue placeholder="Choose a vehicle" />
               </SelectTrigger>
               <SelectContent>
@@ -177,7 +203,9 @@ export function TestDriveForm() {
             control={control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className={cn(errors.time && "border-destructive")}>
+                <SelectTrigger
+                  className={cn(errors.time && "border-destructive")}
+                >
                   <SelectValue placeholder="Select time" />
                 </SelectTrigger>
                 <SelectContent>
@@ -239,7 +267,12 @@ export function TestDriveForm() {
         </div>
       </div>
 
-      <Button type="submit" size="lg" disabled={isSubmitting} className="w-full">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={isSubmitting}
+        className="w-full"
+      >
         {isSubmitting ? "Scheduling..." : "Confirm Test Drive"}
       </Button>
     </form>

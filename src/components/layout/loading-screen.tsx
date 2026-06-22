@@ -38,7 +38,7 @@ export function LoadingScreen() {
                 viewBox="0 0 200 40"
                 className="h-10 w-48 text-foreground"
                 fill="currentColor"
-                aria-label="Apex Motors"
+                aria-label="Elevon Automotive Motors"
               >
                 <motion.path
                   d="M10 35 L50 5 L90 35 M50 5 L50 35 M110 35 L150 5 L190 35 M150 5 L150 35"
@@ -57,7 +57,7 @@ export function LoadingScreen() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
             >
-              Apex Motors
+              Elevon Automotive Motors
             </motion.p>
           </motion.div>
           <motion.div

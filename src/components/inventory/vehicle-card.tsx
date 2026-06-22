@@ -12,7 +12,7 @@ import {
   Fuel,
   Settings2,
 } from "lucide-react";
-import { Vehicle } from "@/lib/vehicles";
+import { Vehicle } from "@/lib/types/vehicle";
 import { formatPrice, formatNumber } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
@@ -47,12 +47,12 @@ export function VehicleCard({
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         <Link href={`/inventory/${vehicle.slug}`} className="block h-full">
           <Image
-            src={vehicle.images[0]}
+            src={vehicle.images[0] || "/placeholder-car.jpg"}
             alt={`${vehicle.brand} ${vehicle.model}`}
             fill
             className={cn(
               "object-cover transition-transform duration-700",
-              hovered && "scale-105"
+              hovered && "scale-105",
             )}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
@@ -85,9 +85,11 @@ export function VehicleCard({
             onClick={() => onToggleFavorite?.(vehicle.id)}
             className={cn(
               "flex h-9 w-9 items-center justify-center rounded-full glass transition-colors cursor-pointer",
-              isFavorite && "text-red-500"
+              isFavorite && "text-red-500",
             )}
-            aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+            aria-label={
+              isFavorite ? "Remove from favorites" : "Add to favorites"
+            }
           >
             <Heart className={cn("h-4 w-4", isFavorite && "fill-current")} />
           </button>
@@ -95,7 +97,7 @@ export function VehicleCard({
             onClick={() => onToggleCompare?.(vehicle.id)}
             className={cn(
               "flex h-9 w-9 items-center justify-center rounded-full glass transition-colors cursor-pointer",
-              isCompare && "text-foreground bg-secondary"
+              isCompare && "text-foreground bg-secondary",
             )}
             aria-label={isCompare ? "Remove from compare" : "Add to compare"}
           >

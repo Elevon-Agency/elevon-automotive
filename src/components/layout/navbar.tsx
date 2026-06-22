@@ -59,7 +59,7 @@ export function Navbar() {
             href="/"
             className="text-display text-lg font-semibold tracking-tight transition-opacity hover:opacity-70"
           >
-            APEX
+            Elevon Automotive
           </Link>
 
           <ul className="hidden items-center gap-10 lg:flex">
@@ -123,7 +123,7 @@ export function Navbar() {
           >
             <div className="flex h-full flex-col">
               <div className="container-wide flex items-center justify-between py-6">
-                <span className="text-display text-lg font-semibold">APEX</span>
+                <span className="text-display text-lg font-semibold">Elevon Automotive</span>
                 <Button
                   variant="ghost"
                   size="icon"

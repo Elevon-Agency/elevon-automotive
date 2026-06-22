@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, useSpring } from "framer-motion";
+import { useInView } from "framer-motion";
 
 interface CounterProps {
   value: number;
@@ -18,25 +18,40 @@ export function Counter({
   className = "",
 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-20%" });
-  const motionValue = useMotionValue(0);
-  const springValue = useSpring(motionValue, { duration: 2000, bounce: 0 });
-  const [display, setDisplay] = useState("0");
+  const isInView = useInView(ref, { once: true });
+
+  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (isInView) motionValue.set(value);
-  }, [isInView, motionValue, value]);
+    if (!isInView) return;
 
-  useEffect(() => {
-    return springValue.on("change", (latest) => {
-      setDisplay(Math.round(latest).toLocaleString());
-    });
-  }, [springValue]);
+    let start = 0;
+    const end = Number(value);
+
+    const duration = 1200;
+    const stepTime = 16;
+
+    const increment = end / (duration / stepTime);
+
+    const timer = setInterval(() => {
+      start += increment;
+
+      if (start >= end) {
+        setDisplay(end);
+        clearInterval(timer);
+      } else {
+        setDisplay(Math.floor(start));
+      }
+    }, stepTime);
+
+    return () => clearInterval(timer);
+
+  }, [isInView, value]);
 
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {display}
+      {display.toLocaleString()}
       {suffix}
     </span>
   );

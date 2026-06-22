@@ -20,7 +20,7 @@ export async function generateMetadata({
     title: `${vehicle.brand} ${vehicle.model}`,
     description: vehicle.description,
     openGraph: {
-      title: `${vehicle.brand} ${vehicle.model} | Apex Motors`,
+      title: `${vehicle.brand} ${vehicle.model} | Elevon Automotive Motors`,
       description: vehicle.description,
       images: [{ url: vehicle.images[0] }],
     },

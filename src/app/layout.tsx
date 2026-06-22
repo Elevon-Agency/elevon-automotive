@@ -21,21 +21,21 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   title: {
-    default: "Apex Motors | Luxury Hypercar Showroom",
-    template: "%s | Apex Motors",
+    default: "Elevon Automotive Motors | Luxury Hypercar Showroom",
+    template: "%s | Elevon Automotive Motors",
   },
   description:
-    "Curated collection of the world's finest hypercars and supercars. Experience automotive excellence at Apex Motors — where engineering meets artistry.",
+    "Curated collection of the world's finest hypercars and supercars. Experience automotive excellence at Elevon Automotive Motors — where engineering meets artistry.",
   keywords: [
     "luxury cars",
     "hypercars",
     "supercars",
-    "Apex Motors",
+    "Elevon Automotive Motors",
     "exotic cars",
     "premium automotive",
   ],
   openGraph: {
-    title: "Apex Motors | Luxury Hypercar Showroom",
+    title: "Elevon Automotive Motors | Luxury Hypercar Showroom",
     description:
       "Curated collection of the world's finest hypercars and supercars.",
     type: "website",

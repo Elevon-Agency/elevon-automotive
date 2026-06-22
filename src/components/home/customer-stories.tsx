@@ -10,7 +10,7 @@ import { RevealOnScroll } from "@/components/shared/reveal-on-scroll";
 const testimonials = [
   {
     quote:
-      "The entire experience felt bespoke — from the private viewing to the white-glove delivery. Apex understands luxury at a level few can match.",
+      "The entire experience felt bespoke — from the private viewing to the white-glove delivery. Elevon Automotive understands luxury at a level few can match.",
     name: "Alexander Chen",
     title: "Collector · San Francisco",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
@@ -18,7 +18,7 @@ const testimonials = [
   },
   {
     quote:
-      "I've purchased from showrooms worldwide. Apex's attention to detail, transparency, and passion for automotive excellence is unmatched.",
+      "I've purchased from showrooms worldwide. Elevon Automotive's attention to detail, transparency, and passion for automotive excellence is unmatched.",
     name: "Isabella Marchetti",
     title: "Entrepreneur · Milan",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
