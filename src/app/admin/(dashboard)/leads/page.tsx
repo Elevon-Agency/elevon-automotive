@@ -2,13 +2,28 @@ import { prisma } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { updateLeadAction } from "@/app/admin/(dashboard)/leads/actions";
+type LeadWithCar = {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  status: string;
+  notes: string | null;
+  createdAt: Date;
+  car: {
+    brand: string;
+    model: string;
+    year: number;
+  } | null;
+};
 
 const statuses = ["NEW", "CONTACTED", "QUALIFIED", "CLOSED", "LOST"];
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminLeadsPage() {
-  const leads = await prisma.lead.findMany({
+  const leads: LeadWithCar[] = await prisma.lead.findMany({
     orderBy: { createdAt: "desc" },
     include: { car: { select: { brand: true, model: true, year: true } } },
   });
