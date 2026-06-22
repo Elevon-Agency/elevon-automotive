@@ -1,16 +1,26 @@
 import Link from "next/link";
-import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import { Plus, Search } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { formatPrice, formatNumber } from "@/lib/utils";
-type CarWithImage = Prisma.CarGetPayload<{
-  include: {
-    images: true;
-  };
-}>;
+type CarWithImage = {
+  id: string;
+  slug: string;
+  brand: string;
+  model: string;
+  year: number;
+  price: number;
+  mileage: number;
+  horsepower: number;
+  transmission: string;
+  status: string;
+  featured: boolean;
+  images: {
+    url: string;
+  }[];
+};
 
 export const dynamic = "force-dynamic";
 
